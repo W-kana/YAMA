@@ -187,3 +187,14 @@ rule APT10_ChChes_powershell {
     	condition:
     		$v1c and ($v1a or $v1b)
 }
+
+rule eicar {
+    strings:
+        // 出力するメッセージにマッチするパターン
+        $message = "EICAR-STANDARD-ANTIVIRUS-TEST-FILE!"
+        // 先頭 8 バイトにマッチするパターン
+        $leading_bytes = {58 35 4f 21 50 25 40 41}
+    condition:
+        // どちらかのパターンにマッチする場合に検出する
+        $message or $leading_bytes
+}
